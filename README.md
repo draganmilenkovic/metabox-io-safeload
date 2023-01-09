@@ -1,6 +1,11 @@
 # metabox-io-safeload
 MetaBox.io safe value load.
 
+<h3>About</h3>
+Safely use MetaBox.io's rwmb_meta() function if your plugin that loads MetaBox.io (and thus MetaBox.io) has loaded.
+Also handles valuer retrieval for terms.
+This is important to pass theme submission requirements (for e.g. themeforest) if you plan on integrating MetaBox.io in your plugin/theme because it should be in "plugin territory" and this code lets you use a simple function that check if it's safe to use MetaBox.io or not. 
+
 <h3>Instructions:</h3>
 <ol>
 	<li>Replace the 'yourtheme' in with your theme slug (cosmetic)</li>
