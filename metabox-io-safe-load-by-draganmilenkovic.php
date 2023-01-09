@@ -3,38 +3,26 @@
 /** 
  * Crucial Core: yourtheme_meta
  * 
- * Description: Use rwmb_meta() function IF METABOX.io PLUGIN HAS LOADED, 
- * specifically, if your plugin that loads MetaBox.io (and thus MetaBox.io) has loaded.
- * Also handles valuer retrieval for terms.
+ * Description: Safely use rwmb_meta() if your plugin that loads MetaBox.io
+ * (and thus MetaBox.io() has loaded. Also handles valuer retrieval for terms.
+ * Offers fallback value input if MetaBox is not loaded or valuer retrieval fails.
  * 
  * Required: PHP 7 or later
  * 
- * Instructions:
- * 1. Replace the 'yourtheme' in with your theme slug (cosmetic)
- * 2. You need to load MetaBox.io via your plugin AND put the plugin's
- *    load_plugin_textdomain function inside a 'your_theme_load_plugin_textdomain' function.
- *    Example:
- *    // Load textdomain (translations)
- *    function your_theme_load_plugin_textdomain() {
- * 		  load_plugin_textdomain( 'your-plugin-handle', false, dirname( plugin_basename(__FILE__) ) . '/languages/' );
- * 	  }
- *    add_action( 'plugins_loaded', 'your_theme_load_plugin_textdomain' );
- * 3. Replace 'your_theme_load_plugin_textdomain' as needed (both here and in your plugin)(cosmetic)
- * 4. Now you can retrieve MB.io values instantly & safely, whether they're for posts or terms, like so:
- * 	  // for posts, pages etc. (i.e. not terms)
- *    $my_var = yourtheme_meta( 'some_mb_field_id', 'fallback_string_ie_black', 'normal' ); // you can also omit the last param
- *    // for terms
- *    $my_var = yourtheme_meta( 'some_mb_field_id', 'fallback string is bananas', 'term' );
+ * Instructions (READ THEM):
+ * https://github.com/draganmilenkovic/metabox-io-safeload
  *
  * @since 1.0.0
  * 
  * @see rwmb_meta()
- * @global function. rwmb_meta()
- * @global $theme_plugin_loaded
+ * @see get_queried_object()
  *
  * @param string. $rwmb_meta_field. Meta Box field ID.
- * @param string. $fallback_value_string. Any string.
- * @param string. $normal_or_term. Check for which type of value-retrieving function to use (posts or terms).
+ * @param string. $fallback_value_string. Any string, if MetaBox.io is not loaded
+ * or if it fails retrieving the specified field's value.
+ * @param string. $normal_or_term. Check which type of value-retrieving function to
+ * use (posts or terms). Default = '', which retrieves for posts. 'term' flags it
+ * to retrieve for terms.
  * 
  * @return string or undefined
  */
@@ -58,9 +46,9 @@ if ( ! function_exists( 'yourtheme_meta' ) ) :
 		 * Handles the value for terms
 		 */
 		function yourtheme_mbterm( $field_id ) {
-			$current_cat = get_queried_object();
-			$current_cat_id = $current_cat->term_id;
-			$value = rwmb_meta( $field_id, array( 'object_type' => 'term' ), $current_cat_id );
+			$current_term = get_queried_object();
+			$current_term_id = $current_term->term_id;
+			$value = rwmb_meta( $field_id, array( 'object_type' => 'term' ), $current_term_id );
 			return $value;
 		}
 

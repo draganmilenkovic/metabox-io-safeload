@@ -3,8 +3,8 @@ MetaBox.io safe value load.
 
 <h3>About</h3>
 Safely use MetaBox.io's rwmb_meta() function if your plugin that loads MetaBox.io (and thus MetaBox.io) has loaded.
-Also handles valuer retrieval for terms.
-This is important to pass theme submission requirements (for e.g. themeforest) if you plan on integrating MetaBox.io in your plugin/theme because it should be in "plugin territory" and this code lets you use a simple function that check if it's safe to use MetaBox.io or not. 
+Also handles value retrieval for terms.
+This is important to pass theme submission requirements (for e.g. themeforest) if you plan on integrating MetaBox.io in your plugin/theme because it should be in "plugin territory" and this code lets you use a simple function that checks if it's safe to use MetaBox.io or not. It's also super useful for quickly getting values for terms, eliminating the extra steps by simply adding the 'term' parameter to the function. Finally, you can you can also pass the fallback value which should be used if MetaBox.io wasn't loaded or if it was loaded but failed in retrieving a value from the specified field. 
 
 <h3>Instructions:</h3>
 <ol>
